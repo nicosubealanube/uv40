@@ -2,7 +2,7 @@ export const fetchUVData = async (lat, lng) => {
     try {
         const response = await fetch(`https://currentuvindex.com/api/v1/uvi?latitude=${lat}&longitude=${lng}`);
         if (!response.ok) {
-            throw new Error('Failed to fetch UV data');
+            throw new Error('Error al obtener datos UV');
         }
         return await response.json();
     } catch (error) {
@@ -15,7 +15,7 @@ export const searchLocation = async (query) => {
     try {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
         if (!response.ok) {
-            throw new Error('Failed to search location');
+            throw new Error('Error al buscar ubicación');
         }
         const data = await response.json();
         if (data && data.length > 0) {
@@ -35,7 +35,7 @@ export const searchLocation = async (query) => {
 export const getSuggestions = async (query) => {
     if (!query || query.length < 3) return [];
     try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`);
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=4`);
         if (!response.ok) return [];
         const data = await response.json();
         return data.map(item => ({

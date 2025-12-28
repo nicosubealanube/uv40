@@ -13,7 +13,7 @@ function App() {
   const [locationName, setLocationName] = useState('');
 
   useEffect(() => {
-    document.title = "UV40 - Real-time UV Index";
+    document.title = "UV40 - Índice UV en Tiempo Real";
   }, []);
 
   const loadUVData = async (lat, lng, name) => {
@@ -24,7 +24,7 @@ function App() {
       setUvData(data);
       if (name) setLocationName(name);
     } catch (err) {
-      setError('Failed to fetch UV data. Please try again.');
+      setError('Error al obtener datos UV. Por favor intente de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -39,18 +39,18 @@ function App() {
         setLocationName(location.display_name.split(',')[0]);
         await loadUVData(location.lat, location.lon);
       } else {
-        setError('Location not found.');
+        setError('Ubicación no encontrada.');
         setLoading(false);
       }
     } catch (err) {
-      setError('Failed to search location.');
+      setError('Error al buscar ubicación.');
       setLoading(false);
     }
   };
 
   const handleUseLocation = () => {
     if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser');
+      setError('La geolocalización no es soportada por tu navegador');
       return;
     }
 
@@ -58,20 +58,20 @@ function App() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
-          await loadUVData(position.coords.latitude, position.coords.longitude, 'My Location');
+          await loadUVData(position.coords.latitude, position.coords.longitude, 'Mi Ubicación');
         } catch (e) {
-          setError('Failed to get weather data for your location');
+          setError('Error al obtener datos del clima para tu ubicación');
         }
       },
       () => {
-        setError('Unable to retrieve your location');
+        setError('No se pudo obtener tu ubicación');
         setLoading(false);
       }
     );
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900 selection:bg-black/10">
+    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-white to-cyan-100 flex flex-col font-sans text-gray-900 selection:bg-black/10">
       {/* Header */}
       <header className="pt-10 pb-8 flex flex-col items-center justify-center">
         <Logo />
@@ -101,6 +101,12 @@ function App() {
           </div>
         )}
       </main>
+
+      <footer className="pb-6 pt-2 text-center">
+        <p className="text-xs text-gray-400 font-medium opacity-60">
+          App desarrollada por nicosubealanube®
+        </p>
+      </footer>
     </div>
   );
 }

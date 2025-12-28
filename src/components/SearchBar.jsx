@@ -8,8 +8,15 @@ const SearchBar = ({ onSearch, onUseLocation, loading }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const wrapperRef = useRef(null);
 
+    const ignoreSearch = useRef(false);
+
     useEffect(() => {
         const fetchSuggestions = async () => {
+            if (ignoreSearch.current) {
+                ignoreSearch.current = false;
+                return;
+            }
+
             if (query.length >= 3) {
                 const results = await getSuggestions(query);
                 setSuggestions(results);
@@ -45,8 +52,9 @@ const SearchBar = ({ onSearch, onUseLocation, loading }) => {
     };
 
     const handleSuggestionClick = (suggestion) => {
+        ignoreSearch.current = true;
         setQuery(suggestion.display_name.split(',')[0]);
-        onSearch(suggestion.display_name); // Or pass lat/lon directly if supported by App
+        onSearch(suggestion.display_name);
         setShowSuggestions(false);
     };
 
@@ -65,7 +73,7 @@ const SearchBar = ({ onSearch, onUseLocation, loading }) => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onFocus={() => query.length >= 3 && setShowSuggestions(true)}
-                    placeholder="Search city (e.g., Buenos Aires)..."
+                    placeholder="Buscar ciudad (ej. Buenos Aires)..."
                     className="w-full pl-11 pr-12 py-4 rounded-2xl border-none bg-white shadow-lg shadow-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 text-gray-700 placeholder-gray-400 text-lg transition-all"
                 />
                 {query && (
@@ -86,9 +94,8 @@ const SearchBar = ({ onSearch, onUseLocation, loading }) => {
                 </button>
             </form>
 
-            {/* Suggestions Dropdown */}
             {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-[3.8rem] left-4 right-4 bg-white rounded-xl shadow-xl shadow-gray-200 border border-gray-100 overflow-hidden max-h-60 overflow-y-auto">
+                <div className="absolute top-[3.8rem] left-4 right-4 bg-white rounded-xl shadow-xl shadow-gray-200 border border-gray-100 overflow-hidden max-h-60 overflow-y-auto z-50">
                     {suggestions.map((item, index) => (
                         <button
                             key={index}
@@ -108,7 +115,7 @@ const SearchBar = ({ onSearch, onUseLocation, loading }) => {
                 className="flex items-center justify-center w-full py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors gap-2 font-medium"
             >
                 <MapPin className="w-4 h-4" />
-                Use my location
+                Usar mi ubicación
             </button>
         </div>
     );

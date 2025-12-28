@@ -9,19 +9,19 @@ const getUVColor = (uvi) => {
 };
 
 const getUVDescription = (uvi) => {
-    if (uvi <= 2) return 'Low';
-    if (uvi <= 5) return 'Moderate';
-    if (uvi <= 7) return 'High';
-    if (uvi <= 10) return 'Very High';
-    return 'Extreme';
+    if (uvi <= 2) return 'Bajo';
+    if (uvi <= 5) return 'Moderado';
+    if (uvi <= 7) return 'Alto';
+    if (uvi <= 10) return 'Muy Alto';
+    return 'Extremo';
 };
 
 const getUVAdvice = (uvi) => {
-    if (uvi <= 2) return "Enjoy the sun! No specific protection required for most people.";
-    if (uvi <= 5) return "Stay in shade near midday. Wear a hat and use SPF 15+ sunscreen.";
-    if (uvi <= 7) return "Reduce sun exposure between 10am-4pm. Wear a hat, sunglasses, and SPF 30+.";
-    if (uvi <= 10) return "Minimize sun exposure between 10am-4pm. Protective clothing, hat, and SPF 50+ are essential.";
-    return "Try to avoid sun exposure between 10am-4pm. Unprotected skin can burn in minutes.";
+    if (uvi <= 2) return "¡Disfruta del sol! No se requiere protección específica para la mayoría.";
+    if (uvi <= 5) return "Busca sombra cerca del mediodía. Usa sombrero y protector solar SPF 15+.";
+    if (uvi <= 7) return "Reduce la exposición entre 10am-4pm. Usa sombrero, gafas y SPF 30+.";
+    if (uvi <= 10) return "Minimiza la exposición entre 10am-4pm. Ropa, sombrero y SPF 50+ esenciales.";
+    return "Evita el sol entre 10am-4pm. La piel sin protección se quema en minutos.";
 };
 
 const CurrentUVCard = ({ now }) => {
@@ -35,18 +35,14 @@ const CurrentUVCard = ({ now }) => {
     return (
         <div className="w-full px-4 mb-4">
             <div className={`w-full max-w-md mx-auto aspect-square rounded-[2.5rem] ${colorClass} text-white flex flex-col items-center justify-center p-8 shadow-xl transition-all duration-500 ring-4 ring-white mb-6 relative overflow-hidden`}>
-                <div className="text-xl font-medium opacity-90 mb-2">Current UV Index</div>
+                <div className="text-xl font-medium opacity-90 mb-2">Índice UV Actual</div>
                 <div className="text-9xl font-bold tracking-tighter">{Math.round(uvi)}</div>
                 <div className="text-2xl font-medium mt-6 bg-white/20 px-8 py-2 rounded-full backdrop-blur-md">
                     {description}
                 </div>
-            </div>
-
-            <div className="w-full max-w-md mx-auto bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Protection Advice</h3>
-                <p className="text-gray-800 text-lg leading-relaxed font-medium">
+                <div className="text-sm font-medium mt-4 text-center max-w-[80%] opacity-90">
                     {advice}
-                </p>
+                </div>
             </div>
         </div>
     );

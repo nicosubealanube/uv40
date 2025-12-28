@@ -16,7 +16,7 @@ const HourlyForecast = ({ forecast }) => {
 
     return (
         <div className="w-full max-w-md mx-auto">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 px-6">Next 24 Hours</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 px-6">Próximas 24 Horas</h3>
             <div className="flex overflow-x-auto pb-8 px-6 gap-3 no-scrollbar snap-x">
                 {next24.map((item, index) => {
                     const date = new Date(item.time);
