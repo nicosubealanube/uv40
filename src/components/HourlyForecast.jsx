@@ -1,11 +1,12 @@
 import React from 'react';
+import { getUVStatus } from '../utils/uvHelpers';
 
-const getUVColorSmall = (uvi) => {
-    if (uvi <= 2) return 'bg-emerald-500';
-    if (uvi <= 5) return 'bg-yellow-400';
-    if (uvi <= 7) return 'bg-orange-500';
-    if (uvi <= 10) return 'bg-red-500';
-    return 'bg-purple-600';
+const dotColorMap = {
+    emerald: 'bg-emerald-500',
+    yellow: 'bg-yellow-400',
+    orange: 'bg-orange-500',
+    red: 'bg-red-500',
+    purple: 'bg-purple-600',
 };
 
 const HourlyForecast = ({ forecast }) => {
@@ -21,13 +22,16 @@ const HourlyForecast = ({ forecast }) => {
                 {next24.map((item, index) => {
                     const date = new Date(item.time);
                     const hours = date.getHours().toString().padStart(2, '0');
-                    const color = getUVColorSmall(item.uvi);
+                    const { colorName, label } = getUVStatus(item.uvi);
+
+                    const finalColorClass = dotColorMap[colorName] || 'bg-gray-300';
 
                     return (
-                        <div key={index} className="snap-center flex-shrink-0 flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100 min-w-[4.5rem] hover:-translate-y-1 transition-transform duration-300">
-                            <span className="text-gray-400 text-xs font-medium mb-2">{hours}:00</span>
-                            <span className="text-xl font-bold text-gray-900 mb-2">{Math.round(item.uvi)}</span>
-                            <div className={`w-2 h-2 rounded-full ${color}`} />
+                        <div key={index} className="snap-center flex-shrink-0 flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100 min-w-[5.5rem] hover:-translate-y-1 transition-transform duration-300">
+                            <span className="text-gray-400 text-xs font-medium mb-1">{hours}:00</span>
+                            <span className="text-xl font-bold text-gray-900 mb-1">{Math.round(item.uvi)}</span>
+                            <div className={`w-2 h-2 rounded-full ${finalColorClass} mb-2`} />
+                            <span className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">{label}</span>
                         </div>
                     );
                 })}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">uv40</string>
+    <string name="title_activity_main">uv40</string>
+    <string name="package_name">com.nicosubealanube.uv40</string>
+    <string name="custom_url_scheme">com.nicosubealanube.uv40</string>
+</resources>
